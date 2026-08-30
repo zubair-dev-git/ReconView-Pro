@@ -154,17 +154,25 @@ export const Navbar: React.FC<NavbarProps> = ({
           {showThemeMenu && (
             <div
               id="theme-dropdown-menu"
-              className="absolute right-0 mt-2 w-72 bg-white text-slate-900 border border-slate-200 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100"
+              className="absolute right-0 mt-2 w-72 border rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100"
+              style={{
+                backgroundColor: 'var(--theme-card-bg)',
+                borderColor: 'var(--theme-card-border)',
+                color: 'var(--theme-text-primary)',
+              }}
             >
-              <div className="px-3.5 py-1.5 border-b border-slate-100 mb-1">
-                <div className="text-xs font-bold text-slate-900 flex items-center justify-between">
+              <div
+                className="px-3.5 py-1.5 border-b mb-1"
+                style={{ borderColor: 'var(--theme-card-border)' }}
+              >
+                <div className="text-xs font-bold flex items-center justify-between" style={{ color: 'var(--theme-text-primary)' }}>
                   <span>Visual Themes</span>
-                  <span className="text-[10px] font-normal text-slate-400 uppercase tracking-wider">
-                    5 Professional Schemes
+                  <span className="text-[10px] font-normal uppercase tracking-wider" style={{ color: 'var(--theme-text-muted)' }}>
+                    5 Eye-Friendly Palettes
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-0.5">
-                  Select a tailored theme for your auditing and reconciliation workflow.
+                <p className="text-[11px] mt-0.5" style={{ color: 'var(--theme-text-secondary)' }}>
+                  Anti-glare, softened palettes designed for long data reconciliation sessions.
                 </p>
               </div>
 
@@ -180,11 +188,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                         onSelectTheme(theme.id);
                         setShowThemeMenu(false);
                       }}
-                      className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-start justify-between gap-2.5 ${
-                        isSelected
-                          ? 'bg-slate-100 text-slate-900 font-semibold ring-1 ring-slate-300'
-                          : 'hover:bg-slate-50 text-slate-700'
-                      }`}
+                      className="w-full text-left px-3 py-2 rounded-lg transition-all flex items-start justify-between gap-2.5"
+                      style={{
+                        backgroundColor: isSelected ? 'var(--theme-card-subtle)' : 'transparent',
+                        borderColor: isSelected ? 'var(--theme-primary)' : 'transparent',
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <div className="flex items-start gap-2.5 flex-1 min-w-0">
                         {/* Swatch preview dots */}
@@ -192,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           {theme.swatches.map((color, idx) => (
                             <span
                               key={idx}
-                              className="w-2.5 h-4 rounded-xs border border-black/10 shadow-2xs"
+                              className="w-2.5 h-4 rounded-xs border border-black/15 shadow-2xs"
                               style={{ backgroundColor: color }}
                             />
                           ))}
@@ -200,14 +211,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-xs font-bold text-slate-900 truncate">
+                            <span className="text-xs font-bold truncate" style={{ color: 'var(--theme-text-primary)' }}>
                               {theme.name}
                             </span>
-                            <span className="text-[9px] px-1.5 py-0.2 rounded font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                            <span
+                              className="text-[9px] px-1.5 py-0.2 rounded font-medium border"
+                              style={{
+                                backgroundColor: 'var(--theme-card-subtle)',
+                                borderColor: 'var(--theme-card-border)',
+                                color: 'var(--theme-text-secondary)',
+                              }}
+                            >
                               {theme.category}
                             </span>
                           </div>
-                          <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5 leading-tight">
+                          <p className="text-[10px] line-clamp-1 mt-0.5 leading-tight" style={{ color: 'var(--theme-text-muted)' }}>
                             {theme.description}
                           </p>
                         </div>
@@ -278,48 +296,59 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {showExportMenu && (
-            <div className="absolute right-0 mt-2 w-60 bg-white text-slate-900 border border-slate-200 rounded-xl shadow-2xl py-1.5 z-50 text-xs animate-in fade-in zoom-in-95 duration-100">
+            <div
+              className="absolute right-0 mt-2 w-60 border rounded-xl shadow-2xl py-1.5 z-50 text-xs animate-in fade-in zoom-in-95 duration-100"
+              style={{
+                backgroundColor: 'var(--theme-card-bg)',
+                borderColor: 'var(--theme-card-border)',
+                color: 'var(--theme-text-primary)',
+              }}
+            >
               <button
                 type="button"
                 onClick={handleExportExcel}
-                className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 transition-colors"
+                className="w-full text-left px-3.5 py-2 hover:opacity-80 flex items-center gap-2.5 transition-colors"
+                style={{ color: 'var(--theme-text-primary)' }}
               >
-                <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+                <FileSpreadsheet className="w-4 h-4 text-emerald-600 shrink-0" />
                 <div>
-                  <div className="font-semibold text-slate-900">Extracted Table (.xlsx)</div>
-                  <div className="text-[10px] text-slate-400">Aggregated with computed sums</div>
+                  <div className="font-semibold" style={{ color: 'var(--theme-text-primary)' }}>Extracted Table (.xlsx)</div>
+                  <div className="text-[10px]" style={{ color: 'var(--theme-text-muted)' }}>Aggregated with computed sums</div>
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={handleExportChallanAudit}
-                className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 transition-colors"
+                className="w-full text-left px-3.5 py-2 hover:opacity-80 flex items-center gap-2.5 transition-colors"
+                style={{ color: 'var(--theme-text-primary)' }}
               >
-                <CheckSquare className="w-4 h-4 text-blue-600" />
+                <CheckSquare className="w-4 h-4 text-blue-600 shrink-0" />
                 <div>
-                  <div className="font-semibold text-slate-900">Challan Audit Report (.xlsx)</div>
-                  <div className="text-[10px] text-slate-400">Organized by delivery notes</div>
+                  <div className="font-semibold" style={{ color: 'var(--theme-text-primary)' }}>Challan Audit Report (.xlsx)</div>
+                  <div className="text-[10px]" style={{ color: 'var(--theme-text-muted)' }}>Organized by delivery notes</div>
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={handleExportCSV}
-                className="w-full text-left px-3.5 py-2 hover:bg-slate-50 flex items-center gap-2.5 text-slate-700 transition-colors"
+                className="w-full text-left px-3.5 py-2 hover:opacity-80 flex items-center gap-2.5 transition-colors"
+                style={{ color: 'var(--theme-text-primary)' }}
               >
-                <Download className="w-4 h-4 text-slate-500" />
-                <span className="font-medium text-slate-800">Export CSV Data</span>
+                <Download className="w-4 h-4 shrink-0" style={{ color: 'var(--theme-text-muted)' }} />
+                <span className="font-medium" style={{ color: 'var(--theme-text-primary)' }}>Export CSV Data</span>
               </button>
 
-              <div className="border-t border-slate-100 my-1"></div>
+              <div className="border-t my-1" style={{ borderColor: 'var(--theme-card-border)' }}></div>
 
               <button
                 type="button"
                 onClick={handlePrint}
-                className="w-full text-left px-3.5 py-1.5 hover:bg-slate-50 flex items-center gap-2 text-slate-600"
+                className="w-full text-left px-3.5 py-1.5 hover:opacity-80 flex items-center gap-2"
+                style={{ color: 'var(--theme-text-secondary)' }}
               >
-                <Printer className="w-3.5 h-3.5 text-slate-400" />
+                <Printer className="w-3.5 h-3.5" style={{ color: 'var(--theme-text-muted)' }} />
                 <span>Print Table</span>
               </button>
             </div>
