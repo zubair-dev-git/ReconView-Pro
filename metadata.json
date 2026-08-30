@@ -1,0 +1,6 @@
+{
+  "name": "Challan & PO Data Extractor",
+  "description": "Upload, aggregate, and extract PO and Challan data with Sum of Quantity, Unit Price, and Amount, featuring interactive multi-criteria filtering and verification strikethrough.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
