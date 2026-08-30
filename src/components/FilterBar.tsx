@@ -186,11 +186,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               )}
             </div>
             <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-2 bg-slate-50 rounded-lg border border-slate-200">
-              {availablePOs.map(po => {
+              {availablePOs.map((po, idx) => {
                 const selected = filters.selectedPOs.includes(po);
                 return (
                   <button
-                    key={po}
+                    key={`po-filter-${po}-${idx}`}
                     type="button"
                     onClick={() => togglePO(po)}
                     className={`px-2 py-0.5 text-xs rounded transition-colors ${
@@ -220,11 +220,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
               )}
             </div>
             <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-2 bg-slate-50 rounded-lg border border-slate-200">
-              {availableChallans.map(ch => {
+              {availableChallans.map((ch, idx) => {
                 const selected = filters.selectedChallans.includes(ch);
                 return (
                   <button
-                    key={ch}
+                    key={`ch-filter-${ch}-${idx}`}
                     type="button"
                     onClick={() => toggleChallan(ch)}
                     className={`px-2 py-0.5 text-xs rounded transition-colors ${
@@ -250,11 +250,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 Filter by Unit
               </label>
               <div className="flex flex-wrap gap-1.5">
-                {availableUnits.map(unit => {
+                {availableUnits.map((unit, idx) => {
                   const selected = filters.selectedUnits.includes(unit);
                   return (
                     <button
-                      key={unit}
+                      key={`unit-filter-${unit}-${idx}`}
                       type="button"
                       onClick={() => toggleUnit(unit)}
                       className={`px-2.5 py-0.5 text-xs rounded border transition-colors ${

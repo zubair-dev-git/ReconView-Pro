@@ -157,8 +157,8 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
               className="bg-transparent border-none text-xs font-medium text-slate-900 focus:outline-none cursor-pointer pr-2"
             >
               <option value="ALL">All PO Numbers ({allUniquePOs.length})</option>
-              {allUniquePOs.map(po => (
-                <option key={po} value={po}>
+              {allUniquePOs.map((po, idx) => (
+                <option key={`po-opt-${po}-${idx}`} value={po}>
                   {po}
                 </option>
               ))}
@@ -313,9 +313,9 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                         </span>
                         
                         {/* PO List Tags */}
-                        {group.poList.map(po => (
+                        {group.poList.map((po, idx) => (
                           <span
-                            key={po}
+                            key={`po-tag-${po}-${idx}`}
                             className="text-xs font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-semibold"
                           >
                             PO: {po}
@@ -395,7 +395,7 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
 
                       return (
                         <div
-                          key={poGroup.po}
+                          key={`pogroup-${poGroup.po}-${poIdx}`}
                           className={`bg-white border rounded-xl overflow-hidden shadow-xs transition-all ${
                             poGroup.isFullyChecked
                               ? 'border-blue-200 bg-slate-50/30'

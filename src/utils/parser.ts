@@ -129,7 +129,14 @@ export function parseCSVText(csvContent: string): { headers: string[]; records: 
     dynamicTyping: false,
   });
 
-  const headers = result.meta.fields || [];
+  const seen = new Map<string, number>();
+  const headers = (result.meta.fields || []).map((h, idx) => {
+    const raw = (h || '').trim() || `Column_${idx + 1}`;
+    const count = seen.get(raw) || 0;
+    seen.set(raw, count + 1);
+    return count > 0 ? `${raw}_${count + 1}` : raw;
+  });
+
   const records = result.data as Record<string, unknown>[];
   return { headers, records };
 }
@@ -159,9 +166,12 @@ export function parseExcelBuffer(buffer: ArrayBuffer): { headers: string[]; reco
     }
   }
 
+  const seenHeaders = new Map<string, number>();
   const rawHeaders = (rawJson[headerIndex] || []).map((h, i) => {
-    const str = String(h || '').trim();
-    return str || `Column_${i + 1}`;
+    const raw = String(h || '').trim() || `Column_${i + 1}`;
+    const count = seenHeaders.get(raw) || 0;
+    seenHeaders.set(raw, count + 1);
+    return count > 0 ? `${raw}_${count + 1}` : raw;
   });
 
   const records: Record<string, unknown>[] = [];

@@ -313,8 +313,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`po-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -330,8 +330,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`ch-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -347,8 +347,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`txt-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -364,8 +364,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`unit-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -381,8 +381,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`qty-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -398,8 +398,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`price-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -415,8 +415,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`amt-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -432,8 +432,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`sl-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
@@ -449,8 +449,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                       className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
                     >
                       <option value="">-- Select Header --</option>
-                      {headers.map(h => (
-                        <option key={h} value={h}>{h}</option>
+                      {headers.map((h, idx) => (
+                        <option key={`item-hdr-${h}-${idx}`} value={h}>{h}</option>
                       ))}
                     </select>
                   </div>
