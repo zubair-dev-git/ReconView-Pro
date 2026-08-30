@@ -6,12 +6,11 @@ import {
   FileSpreadsheet,
   Layers,
   Printer,
-  RefreshCw,
   Sparkles,
   Trash2,
   Upload,
 } from 'lucide-react';
-import { ExtractedRow, RawRow } from '../types';
+import { ExtractedRow } from '../types';
 import { groupExtractedByChallan } from '../utils/aggregator';
 import {
   exportChallanAuditToExcel,
@@ -62,19 +61,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="h-16 flex items-center justify-between px-4 sm:px-8 bg-slate-900 text-white flex-shrink-0 sticky top-0 z-30 shadow-sm border-b border-slate-800">
       {/* App Identity */}
-      <div className="flex items-center gap-3">
-        <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white shadow-sm flex-shrink-0">
-          <Layers className="w-5 h-5" />
+      <div className="flex items-center gap-2.5">
+        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-sm flex-shrink-0">
+          <Layers className="w-4.5 h-4.5" />
         </div>
-        <div className="flex items-baseline gap-2">
-          <h1 className="text-base sm:text-lg font-semibold tracking-tight text-white flex items-center gap-2">
-            ReconView Pro
-            <span className="text-slate-400 font-normal text-xs sm:text-sm">v2.4.0</span>
-          </h1>
-          <span className="hidden lg:inline text-xs text-slate-400 border-l border-slate-700 pl-3">
-            Challan &amp; PO Extractor
-          </span>
-        </div>
+        <h1 className="text-base sm:text-lg font-semibold tracking-tight text-white">
+          ReconView Pro
+        </h1>
       </div>
 
       {/* Action Controls & Data Status */}
