@@ -17,18 +17,29 @@ import { Navbar } from './components/Navbar';
 import { RawDataTableView } from './components/RawDataTableView';
 import { SummaryStats } from './components/SummaryStats';
 import { UploadModal } from './components/UploadModal';
-import { FilterState, RawRow, TabType } from './types';
+import { FilterState, RawRow, TabType, ThemeId } from './types';
 import {
   aggregateRawRows,
   filterExtractedRows,
   groupExtractedByChallan,
 } from './utils/aggregator';
 import { SAMPLE_RAW_DATA } from './utils/sampleData';
+import { getInitialTheme, saveTheme, THEMES } from './utils/theme';
 
 const STORAGE_KEY_RAW = 'challan_po_raw_data_v1';
 const STORAGE_KEY_CHECKED = 'challan_po_checked_keys_v1';
 
 export default function App() {
+  // 0. Theme State
+  const [theme, setTheme] = useState<ThemeId>(() => getInitialTheme());
+
+  const handleSelectTheme = (newTheme: ThemeId) => {
+    setTheme(newTheme);
+    saveTheme(newTheme);
+    const themeDef = THEMES.find(t => t.id === newTheme);
+    showToast(`Switched to ${themeDef?.name || newTheme} Theme`);
+  };
+
   // 1. Raw Data State
   const [rawRows, setRawRows] = useState<RawRow[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_RAW);
@@ -207,11 +218,19 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans antialiased">
+    <div
+      className={`min-h-screen theme-${theme} flex flex-col font-sans antialiased transition-colors duration-200`}
+      style={{
+        backgroundColor: 'var(--theme-app-bg)',
+        color: 'var(--theme-text-primary)',
+      }}
+    >
       {/* Top Navbar */}
       <Navbar
         rawRowCount={rawRows.length}
         extractedRows={extractedRows}
+        currentTheme={theme}
+        onSelectTheme={handleSelectTheme}
         onOpenUpload={() => setIsUploadOpen(true)}
         onLoadSample={handleLoadSample}
         onClearData={handleClearData}
@@ -221,22 +240,41 @@ export default function App() {
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1">
         {/* Toast Alert */}
         {toastMessage && (
-          <div className="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-2 text-xs font-semibold">
-            <CheckCircle2 className="w-4 h-4 text-blue-400" />
+          <div
+            className="fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2 text-xs font-semibold animate-in fade-in slide-in-from-bottom-2 duration-150"
+            style={{
+              backgroundColor: 'var(--theme-header-bg)',
+              color: '#ffffff',
+              border: '1px solid var(--theme-header-border)',
+            }}
+          >
+            <CheckCircle2 className="w-4 h-4" style={{ color: 'var(--theme-primary)' }} />
             <span>{toastMessage}</span>
           </div>
         )}
 
         {rawRows.length === 0 ? (
           /* Empty State */
-          <div className="bg-white border border-slate-200 rounded-xl p-12 text-center max-w-xl mx-auto shadow-sm space-y-4">
-            <div className="w-14 h-14 bg-slate-100 text-slate-700 rounded-xl flex items-center justify-center mx-auto">
+          <div
+            className="border rounded-xl p-12 text-center max-w-xl mx-auto shadow-sm space-y-4"
+            style={{
+              backgroundColor: 'var(--theme-card-bg)',
+              borderColor: 'var(--theme-card-border)',
+            }}
+          >
+            <div
+              className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto"
+              style={{
+                backgroundColor: 'var(--theme-card-subtle)',
+                color: 'var(--theme-text-secondary)',
+              }}
+            >
               <Upload className="w-6 h-6" />
             </div>
-            <h2 className="text-lg font-bold text-slate-900">
+            <h2 className="text-lg font-bold" style={{ color: 'var(--theme-text-primary)' }}>
               No Challan or PO Data Uploaded
             </h2>
-            <p className="text-xs text-slate-500 max-w-md mx-auto">
+            <p className="text-xs max-w-md mx-auto" style={{ color: 'var(--theme-text-secondary)' }}>
               Upload your spreadsheet containing columns (SL, PO, Item, Challan #, Text, Quantity, Unit, Unit Price, Amount) to extract and summarize totals.
             </p>
             <div className="flex items-center justify-center gap-3 pt-2">
@@ -244,7 +282,8 @@ export default function App() {
                 id="empty-upload-btn"
                 type="button"
                 onClick={() => setIsUploadOpen(true)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded shadow-xs transition-colors flex items-center gap-2"
+                className="px-4 py-2 text-white font-semibold text-xs rounded shadow-xs transition-opacity flex items-center gap-2 hover:opacity-90"
+                style={{ backgroundColor: 'var(--theme-primary)' }}
               >
                 <Upload className="w-4 h-4" />
                 <span>Upload Excel / CSV</span>
@@ -253,9 +292,14 @@ export default function App() {
                 id="empty-sample-btn"
                 type="button"
                 onClick={handleLoadSample}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded transition-colors flex items-center gap-2"
+                className="px-4 py-2 font-semibold text-xs rounded transition-colors flex items-center gap-2 border"
+                style={{
+                  backgroundColor: 'var(--theme-card-subtle)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
               >
-                <Sparkles className="w-4 h-4 text-blue-600" />
+                <Sparkles className="w-4 h-4" style={{ color: 'var(--theme-primary)' }} />
                 <span>Load Sample Data</span>
               </button>
             </div>
@@ -272,16 +316,23 @@ export default function App() {
             />
 
             {/* View Tabs Navigation */}
-            <div className="flex border-b border-slate-200 space-x-6 text-xs font-semibold">
+            <div
+              className="flex border-b space-x-6 text-xs font-semibold"
+              style={{ borderColor: 'var(--theme-card-border)' }}
+            >
               <button
                 id="tab-extracted-view"
                 type="button"
                 onClick={() => setActiveTab('extracted')}
                 className={`pb-3 flex items-center gap-2 border-b-2 transition-all ${
                   activeTab === 'extracted'
-                    ? 'border-blue-600 text-blue-600 font-bold'
-                    : 'border-transparent text-slate-500 hover:text-slate-800'
+                    ? 'font-bold'
+                    : 'border-transparent hover:opacity-80'
                 }`}
+                style={{
+                  borderColor: activeTab === 'extracted' ? 'var(--theme-primary)' : 'transparent',
+                  color: activeTab === 'extracted' ? 'var(--theme-primary)' : 'var(--theme-text-muted)',
+                }}
               >
                 <Layers className="w-4 h-4" />
                 <span>Extracted Summary Table ({filteredExtractedRows.length})</span>
@@ -293,9 +344,13 @@ export default function App() {
                 onClick={() => setActiveTab('challan_audit')}
                 className={`pb-3 flex items-center gap-2 border-b-2 transition-all ${
                   activeTab === 'challan_audit'
-                    ? 'border-blue-600 text-blue-600 font-bold'
-                    : 'border-transparent text-slate-500 hover:text-slate-800'
+                    ? 'font-bold'
+                    : 'border-transparent hover:opacity-80'
                 }`}
+                style={{
+                  borderColor: activeTab === 'challan_audit' ? 'var(--theme-primary)' : 'transparent',
+                  color: activeTab === 'challan_audit' ? 'var(--theme-primary)' : 'var(--theme-text-muted)',
+                }}
               >
                 <FileCheck className="w-4 h-4" />
                 <span>Challan-Wise Verification ({challanGroups.length} Delivery Notes)</span>
@@ -307,9 +362,13 @@ export default function App() {
                 onClick={() => setActiveTab('raw_data')}
                 className={`pb-3 flex items-center gap-2 border-b-2 transition-all ${
                   activeTab === 'raw_data'
-                    ? 'border-blue-600 text-blue-600 font-bold'
-                    : 'border-transparent text-slate-500 hover:text-slate-800'
+                    ? 'font-bold'
+                    : 'border-transparent hover:opacity-80'
                 }`}
+                style={{
+                  borderColor: activeTab === 'raw_data' ? 'var(--theme-primary)' : 'transparent',
+                  color: activeTab === 'raw_data' ? 'var(--theme-primary)' : 'var(--theme-text-muted)',
+                }}
               >
                 <Database className="w-4 h-4" />
                 <span>Raw Source Data ({rawRows.length} Records)</span>

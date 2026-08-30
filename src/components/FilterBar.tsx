@@ -71,7 +71,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm space-y-3">
+    <div
+      className="border rounded-xl p-4 shadow-sm space-y-3 transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--theme-card-bg)',
+        borderColor: 'var(--theme-card-border)',
+      }}
+    >
       {/* Primary Bar */}
       <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
         {/* Search Input - rounded-full search pill */}
@@ -83,7 +89,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             placeholder="Search by PO, Challan #, description text, or item..."
             value={filters.searchQuery}
             onChange={e => onFilterChange({ ...filters, searchQuery: e.target.value })}
-            className="w-full bg-slate-50 border border-slate-200 rounded-full pl-10 pr-9 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
+            className="w-full border rounded-full pl-10 pr-9 py-1.5 text-sm focus:outline-none transition-all"
+            style={{
+              backgroundColor: 'var(--theme-card-subtle)',
+              borderColor: 'var(--theme-card-border)',
+              color: 'var(--theme-text-primary)',
+            }}
           />
           {filters.searchQuery && (
             <button
@@ -97,16 +108,23 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         </div>
 
         {/* Verification Status Selector */}
-        <div className="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 self-start lg:self-auto shrink-0">
+        <div
+          className="inline-flex rounded-lg border p-0.5 self-start lg:self-auto shrink-0"
+          style={{
+            borderColor: 'var(--theme-card-border)',
+            backgroundColor: 'var(--theme-card-subtle)',
+          }}
+        >
           <button
             id="filter-status-all"
             type="button"
             onClick={() => onFilterChange({ ...filters, verificationStatus: 'all' })}
-            className={`px-3 py-1 text-xs font-semibold rounded transition-all ${
-              filters.verificationStatus === 'all'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            className="px-3 py-1 text-xs font-semibold rounded transition-all"
+            style={{
+              backgroundColor: filters.verificationStatus === 'all' ? 'var(--theme-card-bg)' : 'transparent',
+              color: filters.verificationStatus === 'all' ? 'var(--theme-text-primary)' : 'var(--theme-text-secondary)',
+              boxShadow: filters.verificationStatus === 'all' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none',
+            }}
           >
             All Status
           </button>
@@ -114,11 +132,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             id="filter-status-pending"
             type="button"
             onClick={() => onFilterChange({ ...filters, verificationStatus: 'pending' })}
-            className={`px-3 py-1 text-xs font-semibold rounded flex items-center gap-1 transition-all ${
-              filters.verificationStatus === 'pending'
-                ? 'bg-slate-800 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            className="px-3 py-1 text-xs font-semibold rounded flex items-center gap-1 transition-all"
+            style={{
+              backgroundColor: filters.verificationStatus === 'pending' ? 'var(--theme-header-bg)' : 'transparent',
+              color: filters.verificationStatus === 'pending' ? '#ffffff' : 'var(--theme-text-secondary)',
+            }}
           >
             <Clock className="w-3 h-3 text-amber-400" />
             Pending
@@ -127,11 +145,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             id="filter-status-verified"
             type="button"
             onClick={() => onFilterChange({ ...filters, verificationStatus: 'verified' })}
-            className={`px-3 py-1 text-xs font-semibold rounded flex items-center gap-1 transition-all ${
-              filters.verificationStatus === 'verified'
-                ? 'bg-blue-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            className="px-3 py-1 text-xs font-semibold rounded flex items-center gap-1 transition-all"
+            style={{
+              backgroundColor: filters.verificationStatus === 'verified' ? 'var(--theme-primary)' : 'transparent',
+              color: filters.verificationStatus === 'verified' ? '#ffffff' : 'var(--theme-text-secondary)',
+            }}
           >
             <CheckCircle2 className="w-3 h-3" />
             Reconciled
@@ -143,16 +161,20 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           id="btn-toggle-advanced-filters"
           type="button"
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border rounded transition-colors ${
-            showAdvanced || activeFilterCount > (filters.searchQuery ? 1 : 0)
-              ? 'border-blue-300 bg-blue-50 text-blue-700'
-              : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
-          }`}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border rounded transition-colors"
+          style={{
+            backgroundColor: showAdvanced || activeFilterCount > (filters.searchQuery ? 1 : 0) ? 'var(--theme-primary-light)' : 'var(--theme-card-subtle)',
+            borderColor: showAdvanced || activeFilterCount > (filters.searchQuery ? 1 : 0) ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+            color: showAdvanced || activeFilterCount > (filters.searchQuery ? 1 : 0) ? 'var(--theme-primary-text)' : 'var(--theme-text-secondary)',
+          }}
         >
           <SlidersHorizontal className="w-3.5 h-3.5" />
           <span>Filters</span>
           {activeFilterCount > 0 && (
-            <span className="w-4 h-4 rounded-full bg-blue-600 text-white text-[10px] flex items-center justify-center font-bold">
+            <span
+              className="w-4 h-4 rounded-full text-white text-[10px] flex items-center justify-center font-bold"
+              style={{ backgroundColor: 'var(--theme-primary)' }}
+            >
               {activeFilterCount}
             </span>
           )}
@@ -164,7 +186,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             id="btn-reset-filters"
             type="button"
             onClick={handleReset}
-            className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded transition-colors"
+            className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-rose-500 hover:text-rose-700 rounded transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset</span>
@@ -174,18 +196,29 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
       {/* Advanced Filter Collapsible Section */}
       {showAdvanced && (
-        <div className="pt-3 border-t border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        <div
+          className="pt-3 border-t grid grid-cols-1 md:grid-cols-3 gap-4 text-xs"
+          style={{ borderColor: 'var(--theme-card-border)' }}
+        >
           {/* PO Multi-select */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--theme-text-muted)' }}>
                 Filter by PO
               </label>
               {filters.selectedPOs.length > 0 && (
-                <span className="text-[10px] text-blue-600 font-semibold">{filters.selectedPOs.length} selected</span>
+                <span className="text-[10px] font-semibold" style={{ color: 'var(--theme-primary)' }}>
+                  {filters.selectedPOs.length} selected
+                </span>
               )}
             </div>
-            <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-2 bg-slate-50 rounded-lg border border-slate-200">
+            <div
+              className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-2 rounded-lg border"
+              style={{
+                backgroundColor: 'var(--theme-card-subtle)',
+                borderColor: 'var(--theme-card-border)',
+              }}
+            >
               {availablePOs.map((po, idx) => {
                 const selected = filters.selectedPOs.includes(po);
                 return (
@@ -193,18 +226,19 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     key={`po-filter-${po}-${idx}`}
                     type="button"
                     onClick={() => togglePO(po)}
-                    className={`px-2 py-0.5 text-xs rounded transition-colors ${
-                      selected
-                        ? 'bg-blue-600 text-white font-medium shadow-xs'
-                        : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-400'
-                    }`}
+                    className="px-2 py-0.5 text-xs rounded transition-colors border"
+                    style={{
+                      backgroundColor: selected ? 'var(--theme-primary)' : 'var(--theme-card-bg)',
+                      color: selected ? '#ffffff' : 'var(--theme-text-primary)',
+                      borderColor: selected ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                    }}
                   >
                     {po}
                   </button>
                 );
               })}
               {availablePOs.length === 0 && (
-                <span className="text-xs text-slate-400">No POs found</span>
+                <span className="text-xs" style={{ color: 'var(--theme-text-muted)' }}>No POs found</span>
               )}
             </div>
           </div>
@@ -212,14 +246,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           {/* Challan Multi-select */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <label className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--theme-text-muted)' }}>
                 Filter by Challan #
               </label>
               {filters.selectedChallans.length > 0 && (
-                <span className="text-[10px] text-blue-600 font-semibold">{filters.selectedChallans.length} selected</span>
+                <span className="text-[10px] font-semibold" style={{ color: 'var(--theme-primary)' }}>
+                  {filters.selectedChallans.length} selected
+                </span>
               )}
             </div>
-            <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-2 bg-slate-50 rounded-lg border border-slate-200">
+            <div
+              className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-2 rounded-lg border"
+              style={{
+                backgroundColor: 'var(--theme-card-subtle)',
+                borderColor: 'var(--theme-card-border)',
+              }}
+            >
               {availableChallans.map((ch, idx) => {
                 const selected = filters.selectedChallans.includes(ch);
                 return (
@@ -227,18 +269,19 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                     key={`ch-filter-${ch}-${idx}`}
                     type="button"
                     onClick={() => toggleChallan(ch)}
-                    className={`px-2 py-0.5 text-xs rounded transition-colors ${
-                      selected
-                        ? 'bg-slate-900 text-white font-medium shadow-xs'
-                        : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-400'
-                    }`}
+                    className="px-2 py-0.5 text-xs rounded transition-colors border"
+                    style={{
+                      backgroundColor: selected ? 'var(--theme-header-bg)' : 'var(--theme-card-bg)',
+                      color: selected ? '#ffffff' : 'var(--theme-text-primary)',
+                      borderColor: selected ? 'var(--theme-header-bg)' : 'var(--theme-card-border)',
+                    }}
                   >
                     {ch}
                   </button>
                 );
               })}
               {availableChallans.length === 0 && (
-                <span className="text-xs text-slate-400">No Challans found</span>
+                <span className="text-xs" style={{ color: 'var(--theme-text-muted)' }}>No Challans found</span>
               )}
             </div>
           </div>
@@ -246,7 +289,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           {/* Unit & Range Filters */}
           <div className="space-y-2.5">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: 'var(--theme-text-muted)' }}>
                 Filter by Unit
               </label>
               <div className="flex flex-wrap gap-1.5">
@@ -257,11 +300,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                       key={`unit-filter-${unit}-${idx}`}
                       type="button"
                       onClick={() => toggleUnit(unit)}
-                      className={`px-2.5 py-0.5 text-xs rounded border transition-colors ${
-                        selected
-                          ? 'bg-blue-600 text-white border-blue-600 font-medium'
-                          : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
-                      }`}
+                      className="px-2.5 py-0.5 text-xs rounded border transition-colors"
+                      style={{
+                        backgroundColor: selected ? 'var(--theme-primary)' : 'var(--theme-card-subtle)',
+                        borderColor: selected ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                        color: selected ? '#ffffff' : 'var(--theme-text-primary)',
+                      }}
                     >
                       {unit}
                     </button>
@@ -273,23 +317,37 @@ export const FilterBar: React.FC<FilterBarProps> = ({
             {/* Min / Max Amount */}
             <div className="grid grid-cols-2 gap-2 pt-1">
               <div>
-                <label className="block text-[10px] uppercase font-bold text-slate-400 mb-0.5">Min Amount ($)</label>
+                <label className="block text-[10px] uppercase font-bold mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>
+                  Min Amount ($)
+                </label>
                 <input
                   type="number"
                   placeholder="0.00"
                   value={filters.minAmount}
                   onChange={e => onFilterChange({ ...filters, minAmount: e.target.value })}
-                  className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-200 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full px-2.5 py-1 text-xs border rounded focus:outline-none"
+                  style={{
+                    backgroundColor: 'var(--theme-card-subtle)',
+                    borderColor: 'var(--theme-card-border)',
+                    color: 'var(--theme-text-primary)',
+                  }}
                 />
               </div>
               <div>
-                <label className="block text-[10px] uppercase font-bold text-slate-400 mb-0.5">Max Amount ($)</label>
+                <label className="block text-[10px] uppercase font-bold mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>
+                  Max Amount ($)
+                </label>
                 <input
                   type="number"
                   placeholder="Max"
                   value={filters.maxAmount}
                   onChange={e => onFilterChange({ ...filters, maxAmount: e.target.value })}
-                  className="w-full px-2.5 py-1 text-xs bg-slate-50 border border-slate-200 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full px-2.5 py-1 text-xs border rounded focus:outline-none"
+                  style={{
+                    backgroundColor: 'var(--theme-card-subtle)',
+                    borderColor: 'var(--theme-card-border)',
+                    color: 'var(--theme-text-primary)',
+                  }}
                 />
               </div>
             </div>
@@ -298,13 +356,18 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       )}
 
       {/* Showing count indicator */}
-      <div className="flex items-center justify-between text-xs text-slate-500 pt-1 border-t border-slate-50">
+      <div
+        className="flex items-center justify-between text-xs pt-1 border-t"
+        style={{ borderColor: 'var(--theme-card-border)', color: 'var(--theme-text-secondary)' }}
+      >
         <span>
-          Showing <strong className="text-slate-900">{filteredCount}</strong> of{' '}
+          Showing <strong style={{ color: 'var(--theme-text-primary)' }}>{filteredCount}</strong> of{' '}
           {totalExtractedCount} extracted aggregated groups
         </span>
         {filteredCount < totalExtractedCount && (
-          <span className="text-blue-600 font-semibold text-xs">Filter Active</span>
+          <span className="font-semibold text-xs" style={{ color: 'var(--theme-primary)' }}>
+            Filter Active
+          </span>
         )}
       </div>
     </div>

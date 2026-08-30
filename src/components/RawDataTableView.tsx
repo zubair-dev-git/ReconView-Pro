@@ -91,39 +91,54 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm space-y-4 p-4">
+    <div
+      className="border rounded-xl overflow-hidden shadow-sm space-y-4 p-4 transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--theme-card-bg)',
+        borderColor: 'var(--theme-card-border)',
+      }}
+    >
       {/* Header and Actions */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-slate-900 rounded flex items-center justify-center text-white">
+            <div
+              className="w-7 h-7 rounded flex items-center justify-center text-white"
+              style={{ backgroundColor: 'var(--theme-primary)' }}
+            >
               <Database className="w-4 h-4" />
             </div>
-            <h2 className="text-sm font-bold text-slate-900 tracking-tight">
+            <h2 className="text-sm font-bold tracking-tight" style={{ color: 'var(--theme-text-primary)' }}>
               Raw Source Dataset ({rawRows.length} Total Records)
             </h2>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs mt-0.5" style={{ color: 'var(--theme-text-secondary)' }}>
             Original line items containing SL, PO, Item, Challan #, Text, Quantity, Unit, Unit Price, Amount
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--theme-text-muted)' }} />
             <input
               type="text"
               placeholder="Search raw lines..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="bg-slate-50 border border-slate-200 rounded-full pl-9 pr-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
+              className="border rounded-full pl-9 pr-3 py-1.5 text-xs focus:outline-none transition-all"
+              style={{
+                backgroundColor: 'var(--theme-card-subtle)',
+                borderColor: 'var(--theme-card-border)',
+                color: 'var(--theme-text-primary)',
+              }}
             />
           </div>
 
           <button
             type="button"
             onClick={() => setIsAdding(true)}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors shadow-xs"
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white rounded transition-colors shadow-xs"
+            style={{ backgroundColor: 'var(--theme-primary)' }}
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Line</span>
@@ -132,7 +147,12 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
           <button
             type="button"
             onClick={() => exportRawRowsToExcel(rawRows)}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 rounded transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold border rounded transition-colors"
+            style={{
+              backgroundColor: 'var(--theme-card-subtle)',
+              borderColor: 'var(--theme-card-border)',
+              color: 'var(--theme-text-secondary)',
+            }}
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -143,7 +163,7 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
               id="btn-clear-raw-records"
               type="button"
               onClick={onClearAll}
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 rounded transition-colors"
+              className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-600 rounded transition-colors"
               title="Clear all records"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -157,16 +177,21 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
       {isAdding && (
         <form
           onSubmit={handleSaveAdd}
-          className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3"
+          className="p-4 border rounded-xl space-y-3"
+          style={{
+            backgroundColor: 'var(--theme-card-subtle)',
+            borderColor: 'var(--theme-card-border)',
+          }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+            <span className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--theme-text-primary)' }}>
               Add New Raw Record
             </span>
             <button
               type="button"
               onClick={() => setIsAdding(false)}
-              className="text-slate-400 hover:text-slate-600"
+              className="hover:opacity-70"
+              style={{ color: 'var(--theme-text-muted)' }}
             >
               <X className="w-4 h-4" />
             </button>
@@ -174,60 +199,85 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">SL</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>SL</label>
               <input
                 type="text"
                 value={newRow.sl || ''}
                 onChange={e => setNewRow({ ...newRow, sl: e.target.value })}
-                className="w-full px-2 py-1 text-xs border border-slate-200 rounded bg-white"
+                className="w-full px-2 py-1 text-xs border rounded"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
                 required
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">PO</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>PO</label>
               <input
                 type="text"
                 placeholder="PO-001"
                 value={newRow.po || ''}
                 onChange={e => setNewRow({ ...newRow, po: e.target.value })}
-                className="w-full px-2 py-1 text-xs border border-slate-200 rounded bg-white"
+                className="w-full px-2 py-1 text-xs border rounded"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
                 required
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Item Code</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>Item Code</label>
               <input
                 type="text"
                 placeholder="ITEM-01"
                 value={newRow.item || ''}
                 onChange={e => setNewRow({ ...newRow, item: e.target.value })}
-                className="w-full px-2 py-1 text-xs border border-slate-200 rounded bg-white"
+                className="w-full px-2 py-1 text-xs border rounded"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Challan #</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>Challan #</label>
               <input
                 type="text"
                 placeholder="CH-001"
                 value={newRow.challan || ''}
                 onChange={e => setNewRow({ ...newRow, challan: e.target.value })}
-                className="w-full px-2 py-1 text-xs border border-slate-200 rounded bg-white"
+                className="w-full px-2 py-1 text-xs border rounded"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
                 required
               />
             </div>
             <div className="col-span-2">
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Description Text</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>Description Text</label>
               <input
                 type="text"
                 placeholder="Item specification"
                 value={newRow.text || ''}
                 onChange={e => setNewRow({ ...newRow, text: e.target.value })}
-                className="w-full px-2 py-1 text-xs border border-slate-200 rounded bg-white"
+                className="w-full px-2 py-1 text-xs border rounded"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
                 required
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Quantity</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>Quantity</label>
               <input
                 type="number"
                 step="any"
@@ -237,18 +287,28 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                   const price = Number(newRow.unitPrice || 0);
                   setNewRow({ ...newRow, quantity: qty, amount: +(qty * price).toFixed(2) });
                 }}
-                className="w-full px-2 py-1 text-xs border border-slate-200 rounded bg-white"
+                className="w-full px-2 py-1 text-xs border rounded"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
                 required
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-0.5">Unit</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider mb-0.5" style={{ color: 'var(--theme-text-muted)' }}>Unit</label>
               <input
                 type="text"
                 placeholder="PCS"
                 value={newRow.unit || ''}
                 onChange={e => setNewRow({ ...newRow, unit: e.target.value })}
-                className="w-full px-2 py-1 text-xs border border-slate-200 rounded bg-white"
+                className="w-full px-2 py-1 text-xs border rounded"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: 'var(--theme-card-border)',
+                  color: 'var(--theme-text-primary)',
+                }}
                 required
               />
             </div>
@@ -258,13 +318,19 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
             <button
               type="button"
               onClick={() => setIsAdding(false)}
-              className="px-3 py-1 text-xs text-slate-600 hover:bg-slate-200 rounded"
+              className="px-3 py-1 text-xs border rounded"
+              style={{
+                backgroundColor: 'var(--theme-card-bg)',
+                borderColor: 'var(--theme-card-border)',
+                color: 'var(--theme-text-secondary)',
+              }}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-1 text-xs font-semibold bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 py-1 text-xs font-semibold text-white rounded"
+              style={{ backgroundColor: 'var(--theme-primary)' }}
             >
               Save Record
             </button>
@@ -273,9 +339,19 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
       )}
 
       {/* Raw Data Table */}
-      <div className="overflow-x-auto border border-slate-200 rounded-lg">
+      <div
+        className="overflow-x-auto border rounded-lg"
+        style={{ borderColor: 'var(--theme-card-border)' }}
+      >
         <table className="w-full text-left border-collapse">
-          <thead className="bg-slate-50 text-slate-500 text-xs font-semibold uppercase tracking-wider border-b border-slate-200">
+          <thead
+            className="text-xs font-semibold uppercase tracking-wider border-b"
+            style={{
+              backgroundColor: 'var(--theme-card-subtle)',
+              borderColor: 'var(--theme-card-border)',
+              color: 'var(--theme-text-muted)',
+            }}
+          >
             <tr>
               <th className="py-3 px-3">SL</th>
               <th className="py-3 px-3">PO</th>
@@ -289,10 +365,10 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
               <th className="py-3 px-3 text-center w-20">Actions</th>
             </tr>
           </thead>
-          <tbody className="text-sm divide-y divide-slate-100">
+          <tbody className="text-sm divide-y" style={{ borderColor: 'var(--theme-card-border)' }}>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={10} className="py-8 text-center text-slate-400">
+                <td colSpan={10} className="py-8 text-center" style={{ color: 'var(--theme-text-muted)' }}>
                   No records match search criteria
                 </td>
               </tr>
@@ -302,13 +378,18 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
 
                 if (isEditing) {
                   return (
-                    <tr key={row.id} className="bg-blue-50/40">
+                    <tr key={row.id} style={{ backgroundColor: 'var(--theme-card-subtle)' }}>
                       <td className="p-1">
                         <input
                           type="text"
                           value={editingRow.sl}
                           onChange={e => setEditingRow({ ...editingRow, sl: e.target.value })}
                           className="w-12 px-1 py-0.5 text-xs border rounded"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
                       <td className="p-1">
@@ -317,6 +398,11 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                           value={editingRow.po}
                           onChange={e => setEditingRow({ ...editingRow, po: e.target.value })}
                           className="w-24 px-1 py-0.5 text-xs border rounded"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
                       <td className="p-1">
@@ -325,6 +411,11 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                           value={editingRow.item}
                           onChange={e => setEditingRow({ ...editingRow, item: e.target.value })}
                           className="w-24 px-1 py-0.5 text-xs border rounded"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
                       <td className="p-1">
@@ -333,6 +424,11 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                           value={editingRow.challan}
                           onChange={e => setEditingRow({ ...editingRow, challan: e.target.value })}
                           className="w-24 px-1 py-0.5 text-xs border rounded"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
                       <td className="p-1">
@@ -341,6 +437,11 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                           value={editingRow.text}
                           onChange={e => setEditingRow({ ...editingRow, text: e.target.value })}
                           className="w-full px-1 py-0.5 text-xs border rounded"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
                       <td className="p-1">
@@ -356,6 +457,11 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                             });
                           }}
                           className="w-20 px-1 py-0.5 text-xs border rounded text-right"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
                       <td className="p-1">
@@ -364,6 +470,11 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                           value={editingRow.unit}
                           onChange={e => setEditingRow({ ...editingRow, unit: e.target.value })}
                           className="w-14 px-1 py-0.5 text-xs border rounded"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
                       <td className="p-1">
@@ -379,9 +490,14 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                             });
                           }}
                           className="w-20 px-1 py-0.5 text-xs border rounded text-right"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-primary)',
+                          }}
                         />
                       </td>
-                      <td className="p-1 font-mono text-right font-semibold text-slate-900">
+                      <td className="p-1 font-mono text-right font-semibold" style={{ color: 'var(--theme-text-primary)' }}>
                         ${editingRow.amount.toFixed(2)}
                       </td>
                       <td className="p-1 text-center">
@@ -389,14 +505,16 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                           <button
                             type="button"
                             onClick={handleSaveEdit}
-                            className="px-2 py-0.5 text-xs bg-blue-600 text-white rounded font-bold"
+                            className="px-2 py-0.5 text-xs text-white rounded font-bold"
+                            style={{ backgroundColor: 'var(--theme-primary)' }}
                           >
                             Save
                           </button>
                           <button
                             type="button"
                             onClick={() => setEditingRow(null)}
-                            className="px-1 py-0.5 text-xs text-slate-500"
+                            className="px-1 py-0.5 text-xs"
+                            style={{ color: 'var(--theme-text-muted)' }}
                           >
                             Cancel
                           </button>
@@ -407,22 +525,23 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                 }
 
                 return (
-                  <tr key={row.id} className="hover:bg-slate-50">
-                    <td className="py-2.5 px-3 font-mono text-slate-400 text-xs">{row.sl}</td>
-                    <td className="py-2.5 px-3 font-mono font-medium text-slate-900">{row.po}</td>
-                    <td className="py-2.5 px-3 font-mono text-slate-700">{row.item}</td>
-                    <td className="py-2.5 px-3 font-mono text-slate-700">{row.challan}</td>
-                    <td className="py-2.5 px-4 text-slate-600">{row.text}</td>
-                    <td className="py-2.5 px-3 text-right font-mono font-medium">{row.quantity}</td>
-                    <td className="py-2.5 px-3 font-semibold text-slate-700">{row.unit}</td>
-                    <td className="py-2.5 px-3 text-right font-mono">${row.unitPrice.toFixed(2)}</td>
-                    <td className="py-2.5 px-3 text-right font-mono font-semibold text-slate-900">${row.amount.toFixed(2)}</td>
+                  <tr key={row.id} className="hover:bg-black/5 transition-colors">
+                    <td className="py-2.5 px-3 font-mono text-xs" style={{ color: 'var(--theme-text-muted)' }}>{row.sl}</td>
+                    <td className="py-2.5 px-3 font-mono font-medium" style={{ color: 'var(--theme-text-primary)' }}>{row.po}</td>
+                    <td className="py-2.5 px-3 font-mono" style={{ color: 'var(--theme-text-secondary)' }}>{row.item}</td>
+                    <td className="py-2.5 px-3 font-mono" style={{ color: 'var(--theme-text-secondary)' }}>{row.challan}</td>
+                    <td className="py-2.5 px-4" style={{ color: 'var(--theme-text-primary)' }}>{row.text}</td>
+                    <td className="py-2.5 px-3 text-right font-mono font-medium" style={{ color: 'var(--theme-text-primary)' }}>{row.quantity}</td>
+                    <td className="py-2.5 px-3 font-semibold" style={{ color: 'var(--theme-text-secondary)' }}>{row.unit}</td>
+                    <td className="py-2.5 px-3 text-right font-mono" style={{ color: 'var(--theme-text-secondary)' }}>${row.unitPrice.toFixed(2)}</td>
+                    <td className="py-2.5 px-3 text-right font-mono font-semibold" style={{ color: 'var(--theme-primary)' }}>${row.amount.toFixed(2)}</td>
                     <td className="py-2.5 px-3 text-center">
                       <div className="flex items-center justify-center gap-1.5">
                         <button
                           type="button"
                           onClick={() => setEditingRow({ ...row })}
-                          className="p-1 text-slate-400 hover:text-blue-600 rounded transition-colors"
+                          className="p-1 hover:opacity-80 rounded transition-colors"
+                          style={{ color: 'var(--theme-text-muted)' }}
                           title="Edit Row"
                         >
                           <Edit2 className="w-3.5 h-3.5" />
@@ -430,7 +549,8 @@ export const RawDataTableView: React.FC<RawDataTableViewProps> = ({
                         <button
                           type="button"
                           onClick={() => onDeleteRow(row.id)}
-                          className="p-1 text-slate-400 hover:text-rose-600 rounded transition-colors"
+                          className="p-1 hover:text-rose-600 rounded transition-colors"
+                          style={{ color: 'var(--theme-text-muted)' }}
                           title="Delete Row"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

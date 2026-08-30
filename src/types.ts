@@ -67,3 +67,18 @@ export interface ColumnMapping {
   unitPrice: string;
   amount: string;
 }
+
+export type ThemeId = 'slate' | 'emerald' | 'nordic' | 'obsidian' | 'amber';
+
+export interface ThemeDefinition {
+  id: ThemeId;
+  name: string;
+  category: string;
+  description: string;
+  isDark: boolean;
+  swatches: string[];
+  primaryColor: string;
+  headerBg: string;
+  headerBorder: string;
+  accentBadgeBg: string;
+}

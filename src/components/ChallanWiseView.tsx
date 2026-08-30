@@ -128,33 +128,56 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
   return (
     <div className="space-y-4">
       {/* Challan-Wise View Controls Header */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+      <div
+        className="border rounded-xl p-4 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--theme-card-bg)',
+          borderColor: 'var(--theme-card-border)',
+        }}
+      >
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-slate-900 rounded flex items-center justify-center text-white">
+            <div
+              className="w-7 h-7 rounded flex items-center justify-center text-white"
+              style={{ backgroundColor: 'var(--theme-primary)' }}
+            >
               <FileCheck className="w-4 h-4" />
             </div>
-            <h2 className="text-sm font-bold text-slate-900 tracking-tight">
+            <h2 className="text-sm font-bold tracking-tight" style={{ color: 'var(--theme-text-primary)' }}>
               Challan-Wise Verification (PO Segregated)
             </h2>
-            <span className="text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full">
+            <span
+              className="text-xs font-semibold px-2 py-0.5 rounded-full border"
+              style={{
+                backgroundColor: 'var(--theme-primary-light)',
+                color: 'var(--theme-primary-text)',
+                borderColor: 'var(--theme-primary)',
+              }}
+            >
               {filteredGroups.length} Challans • {allUniquePOs.length} POs
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs mt-1" style={{ color: 'var(--theme-text-secondary)' }}>
             Audit and verify line items segregated by unique PO numbers within each physical Challan delivery note
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
           {/* PO Dropdown Filter */}
-          <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
-            <span className="font-semibold text-slate-600">PO:</span>
+          <div
+            className="flex items-center gap-1.5 border rounded-lg px-2.5 py-1 text-xs"
+            style={{
+              backgroundColor: 'var(--theme-card-subtle)',
+              borderColor: 'var(--theme-card-border)',
+            }}
+          >
+            <Filter className="w-3.5 h-3.5" style={{ color: 'var(--theme-text-muted)' }} />
+            <span className="font-semibold" style={{ color: 'var(--theme-text-secondary)' }}>PO:</span>
             <select
               value={selectedPOFilter}
               onChange={e => setSelectedPOFilter(e.target.value)}
-              className="bg-transparent border-none text-xs font-medium text-slate-900 focus:outline-none cursor-pointer pr-2"
+              className="bg-transparent border-none text-xs font-medium focus:outline-none cursor-pointer pr-2"
+              style={{ color: 'var(--theme-text-primary)' }}
             >
               <option value="ALL">All PO Numbers ({allUniquePOs.length})</option>
               {allUniquePOs.map((po, idx) => (
@@ -167,27 +190,42 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
 
           {/* Quick Search inside Challans */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--theme-text-muted)' }} />
             <input
               type="text"
               placeholder="Search Challan, PO, Item..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="bg-slate-50 border border-slate-200 rounded-full pl-9 pr-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all w-52 sm:w-60"
+              className="border rounded-full pl-9 pr-3 py-1.5 text-xs focus:outline-none transition-all w-52 sm:w-60"
+              style={{
+                backgroundColor: 'var(--theme-card-subtle)',
+                borderColor: 'var(--theme-card-border)',
+                color: 'var(--theme-text-primary)',
+              }}
             />
           </div>
 
           <button
             type="button"
             onClick={expandAll}
-            className="px-3 py-1.5 text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 rounded transition-colors"
+            className="px-3 py-1.5 text-xs font-semibold border rounded transition-colors"
+            style={{
+              backgroundColor: 'var(--theme-card-subtle)',
+              borderColor: 'var(--theme-card-border)',
+              color: 'var(--theme-text-secondary)',
+            }}
           >
             Expand All
           </button>
           <button
             type="button"
             onClick={collapseAll}
-            className="px-3 py-1.5 text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 rounded transition-colors"
+            className="px-3 py-1.5 text-xs font-semibold border rounded transition-colors"
+            style={{
+              backgroundColor: 'var(--theme-card-subtle)',
+              borderColor: 'var(--theme-card-border)',
+              color: 'var(--theme-text-secondary)',
+            }}
           >
             Collapse All
           </button>
@@ -195,23 +233,31 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
       </div>
 
       {/* Global verification status pill */}
-      <div className="bg-slate-100/70 border border-slate-200 rounded-lg px-4 py-2 flex flex-wrap items-center justify-between text-xs text-slate-600 gap-2">
+      <div
+        className="border rounded-lg px-4 py-2 flex flex-wrap items-center justify-between text-xs gap-2 transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--theme-card-subtle)',
+          borderColor: 'var(--theme-card-border)',
+          color: 'var(--theme-text-secondary)',
+        }}
+      >
         <div className="flex items-center gap-2">
           <span className="font-medium">Verification Progress across displayed records:</span>
-          <strong className="text-slate-900 font-semibold">
+          <strong className="font-semibold" style={{ color: 'var(--theme-text-primary)' }}>
             {totalVerifiedLines} of {totalExtractedLines} lines verified
           </strong>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-28 bg-slate-200 h-2 rounded-full overflow-hidden">
+          <div className="w-28 bg-black/10 h-2 rounded-full overflow-hidden">
             <div
-              className="bg-blue-600 h-full rounded-full transition-all"
+              className="h-full rounded-full transition-all"
               style={{
+                backgroundColor: 'var(--theme-primary)',
                 width: `${totalExtractedLines > 0 ? Math.round((totalVerifiedLines / totalExtractedLines) * 100) : 0}%`,
               }}
             />
           </div>
-          <span className="font-mono font-bold text-slate-900">
+          <span className="font-mono font-bold" style={{ color: 'var(--theme-text-primary)' }}>
             {totalExtractedLines > 0 ? Math.round((totalVerifiedLines / totalExtractedLines) * 100) : 0}%
           </span>
         </div>
@@ -220,14 +266,24 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
       {/* Challan Cards Accordion */}
       <div className="space-y-4">
         {filteredGroups.length === 0 ? (
-          <div className="bg-white border border-slate-200 rounded-xl p-8 text-center text-slate-500">
-            <PackageCheck className="w-8 h-8 mx-auto text-slate-400 mb-2" />
-            <p className="text-sm font-medium">No Challans or POs match your filter criteria.</p>
+          <div
+            className="border rounded-xl p-8 text-center"
+            style={{
+              backgroundColor: 'var(--theme-card-bg)',
+              borderColor: 'var(--theme-card-border)',
+              color: 'var(--theme-text-muted)',
+            }}
+          >
+            <PackageCheck className="w-8 h-8 mx-auto mb-2 opacity-60" />
+            <p className="text-sm font-medium" style={{ color: 'var(--theme-text-primary)' }}>
+              No Challans or POs match your filter criteria.
+            </p>
             {selectedPOFilter !== 'ALL' && (
               <button
                 type="button"
                 onClick={() => setSelectedPOFilter('ALL')}
-                className="mt-2 text-xs font-semibold text-blue-600 hover:underline"
+                className="mt-2 text-xs font-semibold hover:underline"
+                style={{ color: 'var(--theme-primary)' }}
               >
                 Clear PO filter
               </button>
@@ -279,21 +335,28 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
             return (
               <div
                 key={group.challan}
-                className={`bg-white border rounded-xl overflow-hidden shadow-sm transition-all ${
-                  group.isFullyChecked
-                    ? 'border-blue-300 bg-slate-50/20'
-                    : 'border-slate-200'
-                }`}
+                className="border rounded-xl overflow-hidden shadow-sm transition-all"
+                style={{
+                  backgroundColor: 'var(--theme-card-bg)',
+                  borderColor: group.isFullyChecked ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                }}
               >
                 {/* Challan Card Master Header */}
-                <div className="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                <div
+                  className="p-4 border-b flex flex-wrap items-center justify-between gap-3"
+                  style={{
+                    backgroundColor: 'var(--theme-card-subtle)',
+                    borderColor: 'var(--theme-card-border)',
+                  }}
+                >
                   <div
                     onClick={() => toggleExpand(group.challan)}
                     className="flex items-center gap-3 cursor-pointer flex-1"
                   >
                     <button
                       type="button"
-                      className="p-1 rounded text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
+                      className="p-1 rounded hover:bg-black/10"
+                      style={{ color: 'var(--theme-text-muted)' }}
                     >
                       {isExpanded ? (
                         <ChevronDown className="w-4 h-4" />
@@ -304,11 +367,21 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
 
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-mono font-bold bg-slate-900 text-white px-2.5 py-0.5 rounded">
+                        <span
+                          className="text-xs font-mono font-bold text-white px-2.5 py-0.5 rounded"
+                          style={{ backgroundColor: 'var(--theme-primary)' }}
+                        >
                           Challan: {group.challan}
                         </span>
 
-                        <span className="text-xs font-semibold bg-slate-200 text-slate-700 px-2 py-0.5 rounded">
+                        <span
+                          className="text-xs font-semibold px-2 py-0.5 rounded border"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: 'var(--theme-card-border)',
+                            color: 'var(--theme-text-secondary)',
+                          }}
+                        >
                           {poGroups.length} PO {poGroups.length === 1 ? 'Section' : 'Sections'}
                         </span>
                         
@@ -316,26 +389,31 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                         {group.poList.map((po, idx) => (
                           <span
                             key={`po-tag-${po}-${idx}`}
-                            className="text-xs font-mono bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded font-semibold"
+                            className="text-xs font-mono px-2 py-0.5 rounded font-semibold border"
+                            style={{
+                              backgroundColor: 'var(--theme-primary-light)',
+                              color: 'var(--theme-primary-text)',
+                              borderColor: 'var(--theme-primary)',
+                            }}
                           >
                             PO: {po}
                           </span>
                         ))}
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 mt-1.5">
+                      <div className="flex flex-wrap items-center gap-3 text-xs mt-1.5" style={{ color: 'var(--theme-text-secondary)' }}>
                         <span>{group.extractedRowCount} Extracted Aggregates</span>
                         <span>•</span>
                         <span>
                           Challan Total Qty:{' '}
-                          <strong className="text-slate-900 font-mono">
+                          <strong className="font-mono" style={{ color: 'var(--theme-text-primary)' }}>
                             {group.totalQuantity}
                           </strong>
                         </span>
                         <span>•</span>
                         <span>
                           Challan Total Amount:{' '}
-                          <strong className="text-slate-900 font-mono font-bold">
+                          <strong className="font-mono font-bold" style={{ color: 'var(--theme-text-primary)' }}>
                             ${group.totalAmount.toFixed(2)}
                           </strong>
                         </span>
@@ -347,18 +425,22 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                   <div className="flex items-center gap-3">
                     {/* Status Badge */}
                     <div className="flex items-center gap-2">
-                      <div className="w-20 bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                      <div className="w-20 bg-black/10 h-1.5 rounded-full overflow-hidden">
                         <div
-                          className="bg-blue-600 h-full rounded-full transition-all"
-                          style={{ width: `${percent}%` }}
+                          className="h-full rounded-full transition-all"
+                          style={{
+                            backgroundColor: 'var(--theme-primary)',
+                            width: `${percent}%`,
+                          }}
                         />
                       </div>
                       <span
-                        className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                          group.isFullyChecked
-                            ? 'bg-blue-100 text-blue-800'
-                            : 'bg-slate-200 text-slate-700'
-                        }`}
+                        className="text-xs font-bold px-2 py-0.5 rounded-full border"
+                        style={{
+                          backgroundColor: group.isFullyChecked ? 'var(--theme-primary-light)' : 'var(--theme-card-bg)',
+                          color: group.isFullyChecked ? 'var(--theme-primary-text)' : 'var(--theme-text-secondary)',
+                          borderColor: group.isFullyChecked ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                        }}
                       >
                         {group.checkedRowCount}/{group.extractedRowCount} Verified ({percent}%)
                       </span>
@@ -369,7 +451,12 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                       <button
                         type="button"
                         onClick={() => onBulkCheck(groupRowIds, false)}
-                        className="px-2.5 py-1 text-xs font-medium bg-slate-100 border border-slate-200 text-slate-700 hover:bg-slate-200 rounded transition-colors"
+                        className="px-2.5 py-1 text-xs font-medium border rounded transition-colors"
+                        style={{
+                          backgroundColor: 'var(--theme-card-bg)',
+                          borderColor: 'var(--theme-card-border)',
+                          color: 'var(--theme-text-secondary)',
+                        }}
                       >
                         Uncheck Challan
                       </button>
@@ -377,7 +464,8 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                       <button
                         type="button"
                         onClick={() => onBulkCheck(groupRowIds, true)}
-                        className="flex items-center gap-1 px-3 py-1 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors shadow-xs"
+                        className="flex items-center gap-1 px-3 py-1 text-xs font-semibold text-white rounded transition-colors shadow-xs"
+                        style={{ backgroundColor: 'var(--theme-primary)' }}
                       >
                         <Strikethrough className="w-3.5 h-3.5" />
                         <span>Verify Whole Challan</span>
@@ -388,7 +476,7 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
 
                 {/* PO-Segregated Sections inside Challan */}
                 {isExpanded && (
-                  <div className="p-4 space-y-4 bg-slate-50/40">
+                  <div className="p-4 space-y-4" style={{ backgroundColor: 'var(--theme-card-subtle)' }}>
                     {poGroups.map((poGroup, poIdx) => {
                       const poRowIds = poGroup.rows.map(r => r.id);
                       const poPercent = Math.round((poGroup.checkedCount / poGroup.rows.length) * 100) || 0;
@@ -396,45 +484,55 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                       return (
                         <div
                           key={`pogroup-${poGroup.po}-${poIdx}`}
-                          className={`bg-white border rounded-xl overflow-hidden shadow-xs transition-all ${
-                            poGroup.isFullyChecked
-                              ? 'border-blue-200 bg-slate-50/30'
-                              : 'border-slate-200'
-                          }`}
+                          className="border rounded-xl overflow-hidden shadow-xs transition-all"
+                          style={{
+                            backgroundColor: 'var(--theme-card-bg)',
+                            borderColor: poGroup.isFullyChecked ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                          }}
                         >
                           {/* Segregated PO Section Header */}
-                          <div className="px-4 py-2.5 bg-slate-100/70 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                          <div
+                            className="px-4 py-2.5 border-b flex flex-wrap items-center justify-between gap-2"
+                            style={{
+                              backgroundColor: 'var(--theme-card-subtle)',
+                              borderColor: 'var(--theme-card-border)',
+                            }}
+                          >
                             <div className="flex flex-wrap items-center gap-2">
-                              <div className="flex items-center gap-1.5 font-mono font-bold text-xs bg-blue-600 text-white px-2.5 py-1 rounded">
+                              <div
+                                className="flex items-center gap-1.5 font-mono font-bold text-xs text-white px-2.5 py-1 rounded"
+                                style={{ backgroundColor: 'var(--theme-primary)' }}
+                              >
                                 <Tag className="w-3 h-3" />
                                 <span>PO: {poGroup.po}</span>
                               </div>
 
-                              <span className="text-xs text-slate-500 font-medium">
+                              <span className="text-xs font-medium" style={{ color: 'var(--theme-text-muted)' }}>
                                 ({poGroup.rows.length} {poGroup.rows.length === 1 ? 'Line Item' : 'Line Items'})
                               </span>
 
-                              <span className="text-xs text-slate-400">•</span>
+                              <span style={{ color: 'var(--theme-text-muted)' }}>•</span>
 
-                              <div className="text-xs text-slate-600">
-                                PO Qty: <strong className="font-mono text-slate-900">{poGroup.totalQty}</strong> ({poGroup.units.join(', ')})
+                              <div className="text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
+                                PO Qty: <strong className="font-mono" style={{ color: 'var(--theme-text-primary)' }}>{poGroup.totalQty}</strong> ({poGroup.units.join(', ')})
                               </div>
 
-                              <span className="text-xs text-slate-400">•</span>
+                              <span style={{ color: 'var(--theme-text-muted)' }}>•</span>
 
-                              <div className="text-xs text-slate-600">
-                                PO Subtotal: <strong className="font-mono font-bold text-slate-900">${poGroup.totalAmount.toFixed(2)}</strong>
+                              <div className="text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
+                                PO Subtotal: <strong className="font-mono font-bold" style={{ color: 'var(--theme-text-primary)' }}>${poGroup.totalAmount.toFixed(2)}</strong>
                               </div>
                             </div>
 
                             {/* PO-level action button */}
                             <div className="flex items-center gap-2">
                               <span
-                                className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${
-                                  poGroup.isFullyChecked
-                                    ? 'bg-blue-100 text-blue-800'
-                                    : 'bg-slate-200 text-slate-700'
-                                }`}
+                                className="text-[11px] font-semibold px-2 py-0.5 rounded-full border"
+                                style={{
+                                  backgroundColor: poGroup.isFullyChecked ? 'var(--theme-primary-light)' : 'var(--theme-card-subtle)',
+                                  color: poGroup.isFullyChecked ? 'var(--theme-primary-text)' : 'var(--theme-text-secondary)',
+                                  borderColor: poGroup.isFullyChecked ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                                }}
                               >
                                 {poGroup.checkedCount}/{poGroup.rows.length} ({poPercent}%)
                               </span>
@@ -443,7 +541,12 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => onBulkCheck(poRowIds, false)}
-                                  className="px-2 py-0.5 text-xs font-medium bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 rounded transition-colors"
+                                  className="px-2 py-0.5 text-xs font-medium border rounded transition-colors"
+                                  style={{
+                                    backgroundColor: 'var(--theme-card-bg)',
+                                    borderColor: 'var(--theme-card-border)',
+                                    color: 'var(--theme-text-secondary)',
+                                  }}
                                 >
                                   Unverify PO
                                 </button>
@@ -451,7 +554,12 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => onBulkCheck(poRowIds, true)}
-                                  className="flex items-center gap-1 px-2.5 py-0.5 text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded transition-colors"
+                                  className="flex items-center gap-1 px-2.5 py-0.5 text-xs font-semibold rounded border transition-colors"
+                                  style={{
+                                    backgroundColor: 'var(--theme-primary-light)',
+                                    color: 'var(--theme-primary-text)',
+                                    borderColor: 'var(--theme-primary)',
+                                  }}
                                 >
                                   <CheckCircle2 className="w-3 h-3" />
                                   <span>Verify PO ({poGroup.po})</span>
@@ -463,7 +571,14 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                           {/* PO Items Table */}
                           <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
-                              <thead className="bg-slate-50 text-slate-500 text-[11px] font-semibold uppercase tracking-wider border-b border-slate-200">
+                              <thead
+                                className="text-[11px] font-semibold uppercase tracking-wider border-b"
+                                style={{
+                                  backgroundColor: 'var(--theme-card-subtle)',
+                                  borderColor: 'var(--theme-card-border)',
+                                  color: 'var(--theme-text-muted)',
+                                }}
+                              >
                                 <tr>
                                   <th className="py-2 px-3 w-10 text-center">#</th>
                                   <th className="py-2 px-4 w-24 text-center">Reconcile</th>
@@ -474,17 +589,20 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                                   <th className="py-2 px-4 text-right">Sum Amount</th>
                                 </tr>
                               </thead>
-                              <tbody className="text-xs divide-y divide-slate-100">
+                              <tbody className="text-xs divide-y" style={{ borderColor: 'var(--theme-card-border)' }}>
                                 {poGroup.rows.map((row, rIdx) => (
                                   <tr
                                     key={row.id}
                                     className={`transition-colors ${
                                       row.isChecked
-                                        ? 'bg-slate-50/60 text-slate-400 line-through italic'
-                                        : 'hover:bg-slate-50 text-slate-900'
+                                        ? 'line-through italic opacity-50'
+                                        : 'hover:bg-black/5'
                                     }`}
+                                    style={{
+                                      color: row.isChecked ? 'var(--theme-text-muted)' : 'var(--theme-text-primary)',
+                                    }}
                                   >
-                                    <td className="py-2.5 px-3 text-center text-slate-400 font-mono text-xs">
+                                    <td className="py-2.5 px-3 text-center font-mono text-xs" style={{ color: 'var(--theme-text-muted)' }}>
                                       {rIdx + 1}
                                     </td>
 
@@ -493,38 +611,43 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                                         type="checkbox"
                                         checked={row.isChecked}
                                         onChange={() => onToggleCheck(row.id)}
-                                        className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                                        className="w-4 h-4 rounded cursor-pointer"
+                                        style={{ accentColor: 'var(--theme-primary)' }}
                                       />
                                     </td>
 
                                     <td className="py-2.5 px-3">
                                       <span
-                                        className={`inline-block px-1.5 py-0.5 text-xs font-semibold rounded ${
-                                          row.isChecked ? 'text-slate-400 bg-slate-100' : 'bg-slate-100 text-slate-700'
-                                        }`}
+                                        className="inline-block px-1.5 py-0.5 text-xs font-semibold rounded border"
+                                        style={{
+                                          backgroundColor: 'var(--theme-card-subtle)',
+                                          borderColor: 'var(--theme-card-border)',
+                                          color: row.isChecked ? 'var(--theme-text-muted)' : 'var(--theme-text-secondary)',
+                                        }}
                                       >
                                         {row.unit}
                                       </span>
                                     </td>
 
                                     <td className="py-2.5 px-4">
-                                      <span className={row.isChecked ? 'opacity-70' : 'text-slate-700 font-medium'}>
+                                      <span style={{ color: row.isChecked ? 'var(--theme-text-muted)' : 'var(--theme-text-primary)' }}>
                                         {row.text}
                                       </span>
                                     </td>
 
-                                    <td className="py-2.5 px-4 text-right font-mono text-xs">
+                                    <td className="py-2.5 px-4 text-right font-mono text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
                                       ${row.sumUnitPrice.toFixed(2)}
                                     </td>
 
-                                    <td className="py-2.5 px-4 text-right font-mono font-medium text-xs">
+                                    <td className="py-2.5 px-4 text-right font-mono font-medium text-xs" style={{ color: 'var(--theme-text-primary)' }}>
                                       {row.sumQuantity} {row.unit}
                                     </td>
 
                                     <td
-                                      className={`py-2.5 px-4 text-right font-mono font-semibold text-xs ${
-                                        row.isChecked ? '' : 'text-slate-900'
-                                      }`}
+                                      className="py-2.5 px-4 text-right font-mono font-semibold text-xs"
+                                      style={{
+                                        color: row.isChecked ? 'var(--theme-text-muted)' : 'var(--theme-primary)',
+                                      }}
                                     >
                                       ${row.sumAmount.toFixed(2)}
                                     </td>
@@ -533,18 +656,25 @@ export const ChallanWiseView: React.FC<ChallanWiseViewProps> = ({
                               </tbody>
 
                               {/* PO Subtotal Footer */}
-                              <tfoot className="bg-slate-50/80 border-t border-slate-200 text-xs font-semibold text-slate-700">
+                              <tfoot
+                                className="border-t text-xs font-semibold"
+                                style={{
+                                  backgroundColor: 'var(--theme-card-subtle)',
+                                  borderColor: 'var(--theme-card-border)',
+                                  color: 'var(--theme-text-primary)',
+                                }}
+                              >
                                 <tr>
-                                  <td colSpan={4} className="py-2 px-4 text-right font-medium text-slate-500">
+                                  <td colSpan={4} className="py-2 px-4 text-right font-medium" style={{ color: 'var(--theme-text-muted)' }}>
                                     Subtotal for PO ({poGroup.po}):
                                   </td>
-                                  <td className="py-2 px-4 text-right font-mono text-slate-600">
+                                  <td className="py-2 px-4 text-right font-mono" style={{ color: 'var(--theme-text-secondary)' }}>
                                     ${poGroup.rows.reduce((acc, r) => acc + r.sumUnitPrice, 0).toFixed(2)}
                                   </td>
-                                  <td className="py-2 px-4 text-right font-mono text-slate-900">
+                                  <td className="py-2 px-4 text-right font-mono" style={{ color: 'var(--theme-text-primary)' }}>
                                     {poGroup.totalQty} {poGroup.units.join(', ')}
                                   </td>
-                                  <td className="py-2 px-4 text-right font-mono text-slate-900 font-bold">
+                                  <td className="py-2 px-4 text-right font-mono font-bold" style={{ color: 'var(--theme-primary)' }}>
                                     ${poGroup.totalAmount.toFixed(2)}
                                   </td>
                                 </tr>

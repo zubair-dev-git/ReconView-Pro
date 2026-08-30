@@ -148,19 +148,34 @@ export const UploadModal: React.FC<UploadModalProps> = ({
   const hasData = rawRecords.length > 0;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
-      <div className="bg-white border border-slate-200 rounded-xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div
+        className="border rounded-xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--theme-card-bg)',
+          borderColor: 'var(--theme-card-border)',
+        }}
+      >
         {/* Modal Header */}
-        <div className="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div
+          className="p-4 border-b flex items-center justify-between"
+          style={{
+            backgroundColor: 'var(--theme-card-subtle)',
+            borderColor: 'var(--theme-card-border)',
+          }}
+        >
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-slate-900 rounded flex items-center justify-center text-white">
+            <div
+              className="w-7 h-7 rounded flex items-center justify-center text-white"
+              style={{ backgroundColor: 'var(--theme-primary)' }}
+            >
               <Upload className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-900 tracking-tight">
+              <h3 className="text-sm font-bold tracking-tight" style={{ color: 'var(--theme-text-primary)' }}>
                 Upload &amp; Extract Data
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
                 Expected columns: SL, PO, Item, Challan #, Text, Quantity, Unit, Unit Price, Amount
               </p>
             </div>
@@ -171,7 +186,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
               onClose();
               resetState();
             }}
-            className="p-1.5 text-slate-400 hover:text-slate-600 rounded hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded hover:bg-black/10 transition-colors"
+            style={{ color: 'var(--theme-text-muted)' }}
           >
             <X className="w-5 h-5" />
           </button>
@@ -180,7 +196,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
         {/* Modal Body */}
         <div className="p-5 overflow-y-auto space-y-4 flex-1">
           {errorMsg && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-center gap-2 text-xs text-rose-700">
+            <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg flex items-center gap-2 text-xs text-rose-600">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{errorMsg}</span>
             </div>
@@ -189,15 +205,15 @@ export const UploadModal: React.FC<UploadModalProps> = ({
           {!hasData ? (
             <div>
               {/* Tab Selector */}
-              <div className="flex border-b border-slate-200 mb-4">
+              <div className="flex border-b mb-4" style={{ borderColor: 'var(--theme-card-border)' }}>
                 <button
                   type="button"
                   onClick={() => setActiveTab('file')}
-                  className={`pb-2.5 px-4 text-xs font-semibold flex items-center gap-2 border-b-2 transition-colors ${
-                    activeTab === 'file'
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-slate-500 hover:text-slate-700'
-                  }`}
+                  className="pb-2.5 px-4 text-xs font-semibold flex items-center gap-2 border-b-2 transition-colors"
+                  style={{
+                    borderColor: activeTab === 'file' ? 'var(--theme-primary)' : 'transparent',
+                    color: activeTab === 'file' ? 'var(--theme-primary)' : 'var(--theme-text-muted)',
+                  }}
                 >
                   <FileSpreadsheet className="w-4 h-4" />
                   <span>Upload Spreadsheet (.xlsx, .xls, .csv)</span>
@@ -205,11 +221,11 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setActiveTab('paste')}
-                  className={`pb-2.5 px-4 text-xs font-semibold flex items-center gap-2 border-b-2 transition-colors ${
-                    activeTab === 'paste'
-                      ? 'border-blue-600 text-blue-600'
-                      : 'border-transparent text-slate-500 hover:text-slate-700'
-                  }`}
+                  className="pb-2.5 px-4 text-xs font-semibold flex items-center gap-2 border-b-2 transition-colors"
+                  style={{
+                    borderColor: activeTab === 'paste' ? 'var(--theme-primary)' : 'transparent',
+                    color: activeTab === 'paste' ? 'var(--theme-primary)' : 'var(--theme-text-muted)',
+                  }}
                 >
                   <FileText className="w-4 h-4" />
                   <span>Paste Copied Table</span>
@@ -222,20 +238,23 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
-                    dragActive
-                      ? 'border-blue-500 bg-blue-50/50'
-                      : 'border-slate-300 hover:border-slate-400 bg-slate-50'
-                  }`}
+                  className="border-2 border-dashed rounded-xl p-8 text-center transition-colors"
+                  style={{
+                    backgroundColor: dragActive ? 'var(--theme-primary-light)' : 'var(--theme-card-subtle)',
+                    borderColor: dragActive ? 'var(--theme-primary)' : 'var(--theme-card-border)',
+                  }}
                 >
-                  <FileSpreadsheet className="w-12 h-12 mx-auto text-slate-400 mb-3" />
-                  <p className="text-sm font-semibold text-slate-900">
+                  <FileSpreadsheet className="w-12 h-12 mx-auto mb-3 opacity-60" style={{ color: 'var(--theme-text-muted)' }} />
+                  <p className="text-sm font-semibold" style={{ color: 'var(--theme-text-primary)' }}>
                     Drag and drop your Excel or CSV file here
                   </p>
-                  <p className="text-xs text-slate-500 mt-1 mb-4">
+                  <p className="text-xs mt-1 mb-4" style={{ color: 'var(--theme-text-secondary)' }}>
                     Supports .xlsx, .xls, .csv, or .tsv files
                   </p>
-                  <label className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded cursor-pointer transition-colors shadow-xs">
+                  <label
+                    className="inline-flex items-center gap-2 px-4 py-2 text-white text-xs font-semibold rounded cursor-pointer transition-colors shadow-xs"
+                    style={{ backgroundColor: 'var(--theme-primary)' }}
+                  >
                     <Upload className="w-4 h-4" />
                     <span>Browse File</span>
                     <input
@@ -248,7 +267,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs" style={{ color: 'var(--theme-text-secondary)' }}>
                     Copy columns from your Excel / Google Sheets spreadsheet and paste below (with header row):
                   </p>
                   <textarea
@@ -256,13 +275,19 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                     placeholder="SL&#9;PO&#9;Item&#9;Challan #&#9;Text&#9;Quantity&#9;Unit&#9;Unit Price&#9;Amount&#10;1&#9;PO-2024-01&#9;ITM-01&#9;CH-88210&#9;Steel Angles&#9;120&#9;PCS&#9;45.50&#9;5460.00"
                     value={pasteText}
                     onChange={e => setPasteText(e.target.value)}
-                    className="w-full font-mono text-xs p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 text-slate-900"
+                    className="w-full font-mono text-xs p-3 border rounded-xl focus:outline-none transition-all"
+                    style={{
+                      backgroundColor: 'var(--theme-card-subtle)',
+                      borderColor: 'var(--theme-card-border)',
+                      color: 'var(--theme-text-primary)',
+                    }}
                   />
                   <div className="flex justify-end">
                     <button
                       type="button"
                       onClick={handlePasteSubmit}
-                      className="px-4 py-2 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors shadow-xs"
+                      className="px-4 py-2 text-xs font-semibold text-white rounded transition-colors shadow-xs"
+                      style={{ backgroundColor: 'var(--theme-primary)' }}
                     >
                       Process Pasted Data
                     </button>
@@ -273,30 +298,43 @@ export const UploadModal: React.FC<UploadModalProps> = ({
           ) : (
             <div className="space-y-4">
               {/* File Info Bar */}
-              <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-xl">
+              <div
+                className="flex items-center justify-between p-3 border rounded-xl"
+                style={{
+                  backgroundColor: 'var(--theme-primary-light)',
+                  borderColor: 'var(--theme-primary)',
+                }}
+              >
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600" />
-                  <span className="text-xs font-semibold text-blue-900">
+                  <CheckCircle2 className="w-4 h-4" style={{ color: 'var(--theme-primary-text)' }} />
+                  <span className="text-xs font-semibold" style={{ color: 'var(--theme-primary-text)' }}>
                     {fileName} ({rawRecords.length} records parsed)
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={resetState}
-                  className="text-xs text-blue-700 hover:underline font-semibold"
+                  className="text-xs underline font-semibold"
+                  style={{ color: 'var(--theme-primary-text)' }}
                 >
                   Choose Different File
                 </button>
               </div>
 
               {/* Column Mapping Step */}
-              <div className="border border-slate-200 rounded-xl p-4 bg-slate-50 space-y-3">
+              <div
+                className="border rounded-xl p-4 space-y-3"
+                style={{
+                  backgroundColor: 'var(--theme-card-subtle)',
+                  borderColor: 'var(--theme-card-border)',
+                }}
+              >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5 uppercase tracking-wider">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+                  <span className="text-xs font-bold flex items-center gap-1.5 uppercase tracking-wider" style={{ color: 'var(--theme-text-primary)' }}>
+                    <Sparkles className="w-3.5 h-3.5" style={{ color: 'var(--theme-primary)' }} />
                     Verify Column Mapping
                   </span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs" style={{ color: 'var(--theme-text-muted)' }}>
                     Matches your file headers to system fields
                   </span>
                 </div>
@@ -304,13 +342,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 text-xs">
                   {/* PO */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       PO <span className="text-rose-500">*</span>
                     </label>
                     <select
                       value={columnMapping.po}
                       onChange={e => setColumnMapping({ ...columnMapping, po: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -321,13 +364,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* Challan # */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       Challan # <span className="text-rose-500">*</span>
                     </label>
                     <select
                       value={columnMapping.challan}
                       onChange={e => setColumnMapping({ ...columnMapping, challan: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -338,13 +386,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* Text */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       Text (Description) <span className="text-rose-500">*</span>
                     </label>
                     <select
                       value={columnMapping.text}
                       onChange={e => setColumnMapping({ ...columnMapping, text: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -355,13 +408,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* Unit */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       Unit (UOM) <span className="text-rose-500">*</span>
                     </label>
                     <select
                       value={columnMapping.unit}
                       onChange={e => setColumnMapping({ ...columnMapping, unit: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -372,13 +430,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* Quantity */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       Quantity <span className="text-rose-500">*</span>
                     </label>
                     <select
                       value={columnMapping.quantity}
                       onChange={e => setColumnMapping({ ...columnMapping, quantity: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -389,13 +452,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* Unit Price */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       Unit Price
                     </label>
                     <select
                       value={columnMapping.unitPrice}
                       onChange={e => setColumnMapping({ ...columnMapping, unitPrice: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -406,13 +474,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* Amount */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       Amount
                     </label>
                     <select
                       value={columnMapping.amount}
                       onChange={e => setColumnMapping({ ...columnMapping, amount: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -423,13 +496,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* SL */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       SL (Serial No)
                     </label>
                     <select
                       value={columnMapping.sl}
                       onChange={e => setColumnMapping({ ...columnMapping, sl: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -440,13 +518,18 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
                   {/* Item */}
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    <label className="block text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: 'var(--theme-text-secondary)' }}>
                       Item (Item Code)
                     </label>
                     <select
                       value={columnMapping.item}
                       onChange={e => setColumnMapping({ ...columnMapping, item: e.target.value })}
-                      className="w-full p-1.5 bg-white border border-slate-200 rounded text-xs text-slate-900"
+                      className="w-full p-1.5 border rounded text-xs"
+                      style={{
+                        backgroundColor: 'var(--theme-card-bg)',
+                        borderColor: 'var(--theme-card-border)',
+                        color: 'var(--theme-text-primary)',
+                      }}
                     >
                       <option value="">-- Select Header --</option>
                       {headers.map((h, idx) => (
@@ -458,8 +541,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
               </div>
 
               {/* Import Mode */}
-              <div className="flex items-center gap-4 text-xs font-medium text-slate-700">
-                <span className="font-semibold text-slate-900">Import Mode:</span>
+              <div className="flex items-center gap-4 text-xs font-medium" style={{ color: 'var(--theme-text-secondary)' }}>
+                <span className="font-semibold" style={{ color: 'var(--theme-text-primary)' }}>Import Mode:</span>
                 <label className="flex items-center gap-1.5 cursor-pointer">
                   <input
                     type="radio"
@@ -467,7 +550,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                     value="replace"
                     checked={importMode === 'replace'}
                     onChange={() => setImportMode('replace')}
-                    className="text-blue-600 focus:ring-blue-500"
+                    style={{ accentColor: 'var(--theme-primary)' }}
                   />
                   <span>Replace existing dataset</span>
                 </label>
@@ -478,7 +561,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                     value="append"
                     checked={importMode === 'append'}
                     onChange={() => setImportMode('append')}
-                    className="text-blue-600 focus:ring-blue-500"
+                    style={{ accentColor: 'var(--theme-primary)' }}
                   />
                   <span>Append to existing dataset</span>
                 </label>
@@ -488,14 +571,25 @@ export const UploadModal: React.FC<UploadModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-end gap-2">
+        <div
+          className="p-4 border-t flex items-center justify-end gap-2"
+          style={{
+            backgroundColor: 'var(--theme-card-subtle)',
+            borderColor: 'var(--theme-card-border)',
+          }}
+        >
           <button
             type="button"
             onClick={() => {
               onClose();
               resetState();
             }}
-            className="px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-200 rounded transition-colors"
+            className="px-4 py-2 text-xs font-semibold border rounded transition-colors"
+            style={{
+              backgroundColor: 'var(--theme-card-bg)',
+              borderColor: 'var(--theme-card-border)',
+              color: 'var(--theme-text-secondary)',
+            }}
           >
             Cancel
           </button>
@@ -504,7 +598,8 @@ export const UploadModal: React.FC<UploadModalProps> = ({
               id="confirm-import-btn"
               type="button"
               onClick={handleConfirmImport}
-              className="px-5 py-2 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors shadow-xs"
+              className="px-5 py-2 text-xs font-semibold text-white rounded transition-colors shadow-xs"
+              style={{ backgroundColor: 'var(--theme-primary)' }}
             >
               Import &amp; Extract Data ({rawRecords.length} Rows)
             </button>
